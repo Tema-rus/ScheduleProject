@@ -7,6 +7,3 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', include('schedule.urls'))
 ]
-
-if not settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
