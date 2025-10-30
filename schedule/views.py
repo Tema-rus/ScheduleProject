@@ -42,20 +42,6 @@ class IndexView(TemplateView):
             'institute_data': institute_data,
         })
 
-        # === ВРЕМЕННЫЙ ДИАГНОСТИЧЕСКИЙ БЛОК (для отладки статики) ===
-        static_root = settings.STATIC_ROOT
-        if os.path.exists(static_root):
-            files = []
-            for root, dirs, filenames in os.walk(static_root):
-                for filename in filenames:
-                    full_path = os.path.join(root, filename)
-                    rel_path = os.path.relpath(full_path, static_root)
-                    files.append(rel_path)
-            context['static_files_list'] = sorted(files)
-        else:
-            context['static_files_list'] = ['STATIC_ROOT не существует!']
-        # ===================================
-
         return context
 
 

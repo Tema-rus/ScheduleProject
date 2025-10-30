@@ -85,16 +85,4 @@
             </table>
         </section>
     </div>
-
-    <!-- ВРЕМЕННО: отладка статики -->
-    <div style="background: #ffe; padding: 10px; margin-top: 20px; font-family: monospace;">
-        <h3>Содержимое STATIC_ROOT:</h3>
-        <ul>
-            {% for f in static_files_list %}
-                <li>{{ f }}</li>
-            {% empty %}
-                <li>Нет файлов</li>
-            {% endfor %}
-        </ul>
-    </div>
 {% endblock %}
