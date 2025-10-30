@@ -1,0 +1,80 @@
+{% extends 'schedule/base.html' %}
+
+{% block title %}Расписание {{ query }}{% endblock %}
+
+{% block content %}
+    <div class="schedule-container">
+        <h2 class="current-week">{{ week_type }}</h2>
+
+        <section class="schedule">
+            <h2>{% if week_day == "Воскресенье" %}Завтра (Понедельник){% else %}Сегодня ({{ week_day }}){% endif %}</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Время занятий</th>
+                        <th>Дисциплина</th>
+                        <th>Преподаватель</th>
+                        <th>Кабинет</th>
+                        <th>Тип</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for lesson in lessons_now %}
+                        <tr>
+                            <td>{{ lesson.time_slot.start_time }} - {{ lesson.time_slot.end_time }}</td>
+                            <td>{{ lesson.subject.subject_name }}</td>
+                            <td>{{ lesson.teacher.teacher_name }}</td>
+                            <td>{{ lesson.classroom.number }}</td>
+                            <td>{{ lesson.lesson_type }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5">Нет занятий</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="schedule-selector">
+            <a href="?week=odd" class="week-button {% if week == 'odd' %}active{% endif %}">Первая неделя</a>
+            <a href="?week=even" class="week-button {% if week == 'even' %}active{% endif %}">Вторая неделя</a>
+        </div>
+
+        {% for day, lessons in grouped_schedule.items %}
+            <section class="schedule">
+                <h2>{{ day }}</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Время занятий</th>
+                            <th>Дисциплина</th>
+                            <th>Преподаватель</th>
+                            <th>Кабинет</th>
+                            <th>Тип</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for lesson in lessons %}
+                            <tr>
+                                <td>{{ lesson.time_slot.start_time }} - {{ lesson.time_slot.end_time }}</td>
+                                <td>{{ lesson.subject.subject_name }}</td>
+                                <td>{{ lesson.teacher.teacher_name }}</td>
+                                <td>{{ lesson.classroom.number }}</td>
+                                <td>{{ lesson.lesson_type }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5">Нет занятий</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        {% endfor %}
+    </div>
+{% endblock %}

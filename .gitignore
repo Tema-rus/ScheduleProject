@@ -25,12 +25,16 @@ var/
 # =========================
 # Virtual Environment
 # =========================
-venv/
 ENV/
-.env
 .venv
 env.bak/
+venv/
 venv.bak/
+
+# Environment variables
+.env
+.env.local
+*.env
 
 # =========================
 # Django

@@ -1,0 +1,88 @@
+{% extends 'schedule/base.html' %}
+
+{% block title %}Расписание занятий{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <section class="institutes">
+            <h2>Институты</h2>
+            <ul class="institutes-list">
+                {% for institute in institute_data %}
+                    <li class="institute">
+                        <div class="institute-name">{{ institute.institute.institute_name }}</div>
+                        <ul class="courses">
+                            {% for course in institute.courses %}
+                                <li class="course">
+                                    <div class="course-name">{{ course.course }} курс</div>
+                                    <ul class="groups">
+                                        {% for group in course.groups %}
+                                            <li class="group-name">
+                                                <a href="{% url 'group_detail' group.slug %}">{{ group.group_name }}</a>
+                                            </li>
+                                        {% empty %}
+                                            <li>Группы не найдены</li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% empty %}
+                                <li>Курсы не найдены</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% empty %}
+                    <li>Институты не найдены</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section class="schedule">
+            <h2>Режим занятий ВО</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Номер занятия</th>
+                    <th>Время занятия</th>
+                    <th>Перерыв</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1 лента</td>
+                    <td>8:30-10:00</td>
+                    <td>15 минут</td>
+                </tr>
+                <tr>
+                    <td>2 лента</td>
+                    <td>10:15-11:45</td>
+                    <td>30 минут</td>
+                </tr>
+                <tr>
+                    <td>3 лента</td>
+                    <td>12:15-13:45</td>
+                    <td>15 минут</td>
+                </tr>
+                <tr>
+                    <td>4 лента</td>
+                    <td>14:00-15:30</td>
+                    <td>20 минут</td>
+                </tr>
+                <tr>
+                    <td>5 лента</td>
+                    <td>15:50-17:20</td>
+                    <td>10 минут</td>
+                </tr>
+                <tr>
+                    <td>6 лента</td>
+                    <td>17:30-19:00</td>
+                    <td>10 минут</td>
+                </tr>
+                <tr>
+                    <td>7 лента</td>
+                    <td>19:10-20:40</td>
+                    <td>-</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+{% endblock %}
