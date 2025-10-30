@@ -4,7 +4,7 @@ from django.views import View
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from .models import Institute, Group, Teacher, Schedule
-from .utlis import get_week_type  # ⚠️ Опечатка: должно быть utils
+from .utils import get_week_type
 
 import os
 from django.conf import settings
@@ -56,14 +56,33 @@ class GroupDetailView(DetailView):
         group = self.object
         query = group.group_name
 
-        now = datetime.today()
-        result = get_week_type(now)
-        current_week = 'Следующая неделя - первая' if now.weekday() == 6 and result else 'Сейчас идёт первая неделя' if not result else 'Сейчас идёт вторая неделя'
+        now = datetime.today().date()
+        is_even_week = get_week_type(now)  # True = чётная = вторая
 
-        week = self.request.GET.get('week', 'odd' if result else 'even')
+        # Определяем текст для отображения
+        if now.weekday() == 6:  # воскресенье
+            next_week_is_even = not is_even_week
+            current_week_str = f"На следующей неделе - {'вторая (2)' if next_week_is_even else 'первая (1)'}"
+        else:
+            current_week_str = f"Эта неделя - {'вторая (2)' if is_even_week else 'первая (1)'}"
+
+        # Определяем week_type для фильтрации расписания
+        if now.weekday() == 6:
+            # В воскресенье показываем расписание на следующую неделю
+            week_type_for_db = 'even' if not is_even_week else 'odd'
+        else:
+            week_type_for_db = 'even' if is_even_week else 'odd'
+
+        # Получаем week из GET (для переключения между неделями)
+        week = self.request.GET.get('week', week_type_for_db)
+
         weekdays = ('Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье')
 
-        schedule = Schedule.objects.filter(group=group, week_type=week).select_related(
+        # Расписание на выбранную неделю
+        schedule = Schedule.objects.filter(
+            group=group,
+            week_type=week
+        ).select_related(
             'teacher', 'subject', 'classroom', 'time_slot'
         ).order_by('day_of_week', 'time_slot__start_time')
 
@@ -71,15 +90,19 @@ class GroupDetailView(DetailView):
         for item in schedule:
             grouped_schedule[item.day_of_week].append(item)
 
+        # Расписание на сегодня (только если не воскресенье)
         weekday_today = weekdays[now.weekday()]
-        schedule_today = Schedule.objects.filter(
-            group=group,
-            week_type=('odd' if 'первая' in current_week else 'even'),
-            day_of_week=weekday_today
-        ).select_related('teacher', 'subject', 'classroom', 'time_slot').order_by('time_slot__start_time')
+        if now.weekday() != 6:
+            schedule_today = Schedule.objects.filter(
+                group=group,
+                week_type=week_type_for_db,
+                day_of_week=weekday_today
+            ).select_related('teacher', 'subject', 'classroom', 'time_slot').order_by('time_slot__start_time')
+        else:
+            schedule_today = []
 
         context.update({
-            'week_type': current_week,
+            'week_type': current_week_str,
             'week': week,
             'week_day': weekday_today,
             'lessons_now': schedule_today,
@@ -101,35 +124,59 @@ class TeacherDetailView(DetailView):
         teacher = self.object
         query = teacher.teacher_name
 
-        now = datetime.today()
-        result = get_week_type(now)
-        current_week = 'Следующая неделя - первая' if now.weekday() == 6 and result else 'Сейчас идёт первая неделя' if not result else 'Сейчас идёт вторая неделя'
+        now = datetime.today().date()
+        is_even_week = get_week_type(now)  # True = чётная = вторая
 
-        week = self.request.GET.get('week', 'odd' if result else 'even')
+        # Определяем текст для отображения
+        if now.weekday() == 6:  # воскресенье
+            next_week_is_even = not is_even_week
+            current_week_str = f"На следующей неделе - {'вторая (2)' if next_week_is_even else 'первая (1)'}"
+        else:
+            current_week_str = f"Эта неделя - {'вторая (2)' if is_even_week else 'первая (1)'}"
+
+        # Определяем week_type для фильтрации расписания
+        if now.weekday() == 6:
+            # В воскресенье показываем расписание на следующую неделю
+            week_type_for_db = 'even' if not is_even_week else 'odd'
+        else:
+            week_type_for_db = 'even' if is_even_week else 'odd'
+
+        # Получаем week из GET (для переключения между неделями)
+        week = self.request.GET.get('week', week_type_for_db)
+
         weekdays = ('Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье')
 
-        schedule = Schedule.objects.filter(teacher=teacher, week_type=week).select_related(
-            'group', 'subject', 'classroom', 'time_slot'
+        # Расписание на выбранную неделю
+        schedule = Schedule.objects.filter(
+            teacher=teacher,
+            week_type=week
+        ).select_related(
+            'teacher', 'subject', 'classroom', 'time_slot'
         ).order_by('day_of_week', 'time_slot__start_time')
 
         grouped_schedule = {day: [] for day in weekdays}
         for item in schedule:
             grouped_schedule[item.day_of_week].append(item)
 
+        # Расписание на сегодня (только если не воскресенье)
         weekday_today = weekdays[now.weekday()]
-        schedule_today = Schedule.objects.filter(
-            teacher=teacher,
-            week_type=('odd' if 'первая' in current_week else 'even'),
-            day_of_week=weekday_today
-        ).select_related('group', 'subject', 'classroom', 'time_slot').order_by('time_slot__start_time')
+        if now.weekday() != 6:
+            schedule_today = Schedule.objects.filter(
+                teacher=teacher,
+                week_type=week_type_for_db,
+                day_of_week=weekday_today
+            ).select_related('teacher', 'subject', 'classroom', 'time_slot').order_by('time_slot__start_time')
+        else:
+            schedule_today = []
 
         context.update({
-            'week_type': current_week,
+            'week_type': current_week_str,
             'week': week,
             'week_day': weekday_today,
             'lessons_now': schedule_today,
-            'grouped_schedule': grouped_schedule,
             'query': query,
+            'teacher': teacher,
+            'grouped_schedule': grouped_schedule,
         })
         return context
 
