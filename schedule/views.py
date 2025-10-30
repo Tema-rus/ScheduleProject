@@ -58,6 +58,7 @@ class IndexView(TemplateView):
 
         return context
 
+
 class GroupDetailView(DetailView):
     model = Group
     template_name = 'schedule/group_detail.html'
@@ -102,6 +103,7 @@ class GroupDetailView(DetailView):
         })
         return context
 
+
 class TeacherDetailView(DetailView):
     model = Teacher
     template_name = 'schedule/teacher_detail.html'
@@ -145,6 +147,7 @@ class TeacherDetailView(DetailView):
         })
         return context
 
+
 class SearchRedirectView(View):
     def get(self, request, *args, **kwargs):
         query = request.GET.get('query', '').strip()
@@ -164,6 +167,7 @@ class SearchRedirectView(View):
                 return redirect('teacher_detail', slug=teacher.slug)
         except Teacher.DoesNotExist:
             raise Http404("Не найдено ни группы, ни преподавателя по запросу")
+
 
 class SearchSuggestionsView(View):
     def get(self, request, *args, **kwargs):
