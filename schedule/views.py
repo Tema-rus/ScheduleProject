@@ -76,7 +76,7 @@ class GroupDetailView(DetailView):
         # Получаем week из GET (для переключения между неделями)
         week = self.request.GET.get('week', week_type_for_db)
 
-        weekdays = ('Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье')
+        weekdays = ('Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота')
 
         # Расписание на выбранную неделю
         schedule = Schedule.objects.filter(
@@ -130,9 +130,9 @@ class TeacherDetailView(DetailView):
         # Определяем текст для отображения
         if now.weekday() == 6:  # воскресенье
             next_week_is_even = not is_even_week
-            current_week_str = f"На следующей неделе - {'вторая (2)' if next_week_is_even else 'первая (1)'}"
+            current_week_str = f"На следующей неделе - {'вторая' if next_week_is_even else 'первая'}"
         else:
-            current_week_str = f"Эта неделя - {'вторая (2)' if is_even_week else 'первая (1)'}"
+            current_week_str = f"Эта неделя - {'вторая' if is_even_week else 'первая'}"
 
         # Определяем week_type для фильтрации расписания
         if now.weekday() == 6:
@@ -144,7 +144,7 @@ class TeacherDetailView(DetailView):
         # Получаем week из GET (для переключения между неделями)
         week = self.request.GET.get('week', week_type_for_db)
 
-        weekdays = ('Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье')
+        weekdays = ('Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота')
 
         # Расписание на выбранную неделю
         schedule = Schedule.objects.filter(
