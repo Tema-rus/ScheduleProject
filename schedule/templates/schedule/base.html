@@ -9,9 +9,11 @@
     <meta http-equiv="Content-Language" content="ru">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#006400">
+    <meta rel="manifest" href="{% static 'manifest.json' %}">
     <title>{% block title %}{% endblock %}</title>
     {% load static %}
     <link rel="stylesheet" href="https://tema-rus.github.io/ScheduleProject/static/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="{% static 'imgs/favicon.svg' %}">
 </head>
 <body>
 <header>
@@ -34,5 +36,12 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://tema-rus.github.io/ScheduleProject/static/js/script.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('https://tema-rus.github.io/ScheduleProject/static/js/sw.js');
+  });
+}
+</script>
 </body>
 </html>
