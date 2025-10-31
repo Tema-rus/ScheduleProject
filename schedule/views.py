@@ -62,9 +62,9 @@ class GroupDetailView(DetailView):
         # Определяем текст для отображения
         if now.weekday() == 6:  # воскресенье
             next_week_is_even = not is_even_week
-            current_week_str = f"На следующей неделе - {'вторая (2)' if next_week_is_even else 'первая (1)'}"
+            current_week_str = f"На следующей неделе - {'вторая' if next_week_is_even else 'первая'}"
         else:
-            current_week_str = f"Эта неделя - {'вторая (2)' if is_even_week else 'первая (1)'}"
+            current_week_str = f"Эта неделя - {'вторая' if is_even_week else 'первая'}"
 
         # Определяем week_type для фильтрации расписания
         if now.weekday() == 6:
