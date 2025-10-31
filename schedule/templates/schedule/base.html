@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Расписание занятий в Красноярском Государственном Аграрном Университете. Удобный поиск по группам и преподавателям.">
@@ -11,9 +12,12 @@
     <meta name="theme-color" content="#006400">
     <meta rel="manifest" href="{% static 'manifest.json' %}">
     <title>{% block title %}{% endblock %}</title>
-    {% load static %}
     <link rel="stylesheet" href="https://tema-rus.github.io/ScheduleProject/static/css/style.css">
+    <link rel="icon" type="image/png" href="{% static 'imgs/favicon-96x96.png' %}" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="{% static 'imgs/favicon.svg' %}">
+    <link rel="shortcut icon" href="{% static 'imgs/favicon.ico' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'imgs/apple-touch-icon.png' %}">
+    <link rel="manifest" href="{% static 'imgs/site.webmanifest' %}">
 </head>
 <body>
 <header>

@@ -1,27 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200" role="img" aria-labelledby="titleDesc">
-  <title id="titleDesc">Логотип Расписания</title>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="256" height="256"><svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="titleDesc">
+  <title id="SvgjsTitle1011">Favicon Расписания</title>
   <defs>
-    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#2b7cff"/>
-      <stop offset="1" stop-color="#2bc4a7"/>
+    <!-- Градиент из палитры сайта -->
+    <linearGradient id="SvgjsLinearGradient1010" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#006400"></stop>
+      <stop offset="1" stop-color="#609C60"></stop>
     </linearGradient>
-    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.12"/>
+
+    <!-- Мягкая тень -->
+    <filter id="SvgjsFilter1009" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.1"></feDropShadow>
     </filter>
   </defs>
-  <g transform="translate(230, 40)" filter="url(#shadow)">
-    <rect x="0" y="0" rx="12" ry="12" width="140" height="120" fill="white" stroke="url(#g1)" stroke-width="4"/>
-    <rect x="0" y="0" width="140" height="28" rx="12" ry="12" fill="url(#g1)"/>
-    <rect x="16" y="-6" width="12" height="12" rx="3" fill="#ffffff" opacity="0.9"/>
-    <rect x="112" y="-6" width="12" height="12" rx="3" fill="#ffffff" opacity="0.9"/>
-    <g transform="translate(10,40)" fill="#2b2b2b" opacity="0.9">
-      <rect x="0" y="0" width="34" height="26" rx="4" fill="#f6f8fb"/>
-      <rect x="40" y="0" width="34" height="26" rx="4" fill="#f6f8fb"/>
-      <rect x="80" y="0" width="34" height="26" rx="4" fill="#f6f8fb"/>
-      <rect x="0" y="34" width="34" height="26" rx="4" fill="#f6f8fb"/>
-      <rect x="40" y="34" width="34" height="26" rx="4" fill="#eaf9f4"/>
-      <rect x="80" y="34" width="34" height="26" rx="4" fill="#f6f8fb"/>
+
+  <!-- Календарь -->
+  <g filter="url(#shadow)">
+    <!-- Корпус -->
+    <rect x="28" y="32" width="200" height="196" rx="32" ry="32" fill="url(#g1)"></rect>
+
+    <!-- Верхняя тёмная полоса -->
+    <rect x="28" y="32" width="200" height="64" rx="24" ry="24" fill="#004d00"></rect>
+
+    <!-- Кольца -->
+    <rect x="64" y="20" width="20" height="28" rx="6" fill="#ffffff" opacity="0.95"></rect>
+    <rect x="172" y="20" width="20" height="28" rx="6" fill="#ffffff" opacity="0.95"></rect>
+
+    <!-- Сетка (поднята на 2 пикселя выше) -->
+    <g transform="translate(52,114)" fill="#a7dca7">
+      <rect x="0" y="0" width="44" height="44" rx="6"></rect>
+      <rect x="56" y="0" width="44" height="44" rx="6"></rect>
+      <rect x="112" y="0" width="44" height="44" rx="6"></rect>
+
+      <rect x="0" y="56" width="44" height="44" rx="6"></rect>
+      <rect x="56" y="56" width="44" height="44" rx="6"></rect>
+      <rect x="112" y="56" width="44" height="44" rx="6"></rect>
     </g>
-    <path d="M110 70 L140 100 L186 50" stroke="#2bc4a7" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none" transform="translate(-40,10)"/>
+
+    <!-- Галочка -->
+    <path d="M108 168 L144 200 L212 120" stroke="#2b7cff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
   </g>
-</svg>
+</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: none; } }
+</style></svg>
